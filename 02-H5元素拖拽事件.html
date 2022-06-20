@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #box {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+        H5新增拖拽
+            a. 给任意元素添加属性 ：  draggable="true"
+            b. img标签默认的draggable属性就是true
+     -->
+    <div id="box" draggable="true"></div>
+
+    <script>
+        // 1. H5新增拖拽属性 ： draggable = "true"
+        // 2. H5元素拖拽事件 (前提是要设置draggable = "true")
+        //     a.开始拖拽 : ondragstart
+        //     b.正在拖拽 : ondrag
+        //  c.结束拖拽 ：ondragend
+
+        var box = document.querySelector('#box');
+        var x = 0;
+        var y = 0;
+        box.ondragstart = function(e) {
+            console.log('鼠标按下第一次移动鼠标，开始拖拽，等价于onmousedown');
+            x = e.pageX - box.offsetLeft;
+            y = e.pageY - box.offsetTop;
+
+
+        }
+
+        // 正在拖拽
+        box.ondrag = function() {
+                console.log('鼠标按下之后，只要你移动了就会触发，等价于onmousemove');
+            }
+            // 结束拖拽
+        box.ondragend = function(e) {
+            console.log('鼠标松开后，就会触发，等价于鼠标中onmouseup');
+            var x1 = e.pageX - x;
+            var y1 = e.pageY - y;
+            box.style.left = x1 + 'px';
+            box.style.top = y1 + 'px';
+        }
+    </script>
+</body>
+
+</html>

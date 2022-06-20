@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div {
+            width: 350px;
+            height: 550px;
+            border: 1px solid #000;
+            position: absolute;
+            top: 20px;
+        }
+
+        .right {
+            right: 20px;
+        }
+
+        img {
+            width: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="left">
+        <img src="images/1.jpg" alt="">
+        <img src="images/2.jpg" alt="">
+        <img src="images/3.jpg" alt="">
+        <img src="images/4.jpg" alt="">
+        <img src="images/5.jpg" alt="">
+    </div>
+    <div class="right"></div>
+
+    <script>
+        //1.获取元素
+        var left = document.querySelector('.left');//左边容器
+        var right = document.querySelector('.right');//右边容器
+        var imgList = document.querySelectorAll('.left>img');//图片列表
+
+        //声明一个全局变量 ： 存储当前正在拖拽的图片
+        var currentImg = null;
+
+        //2.注册事件
+
+        //2.1 图片元素的开始拖拽事件 ： 记录当前正在拖拽的元素
+        /* 注意点： 元素位置的变化不影响事件触发。 无论该元素在任何位置，都可以触发事件 */
+        for(var i = 0;i<imgList.length;i++){
+            //给每一个img注册开始拖拽事件
+            imgList[i].ondragstart = function(){
+                //3.事件处理 ： 获取当前正在拖拽的图片
+                currentImg = this;
+                console.log(currentImg);
+                
+            };  
+        };
+
+        //2.2 右边容器盒子的拖拽事件 ： 判断图片有没有拖进来
+
+        /* 注意点：必须要注册ondragover，并且阻止默认行为 */
+        right.ondragover = function(e){
+            e.preventDefault(); 
+        };
+
+        right.ondrop = function(){
+            //鼠标松开的时候，图片拖进来了
+            right.appendChild(currentImg);
+        };
+
+        //2.3 左边容器盒子的拖拽事件 ： 判断图片有没有拖进来
+
+        left.ondragover = function(e){
+            e.preventDefault(); 
+        };
+
+        left.ondrop = function(){
+            //鼠标松开的时候，图片拖进来了
+            left.appendChild(currentImg);
+        };
+
+    </script>
+</body>
+
+</html>

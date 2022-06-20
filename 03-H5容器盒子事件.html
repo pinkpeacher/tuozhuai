@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: #f00;
+        }
+
+        .container {
+            width: 400px;
+            height: 550px;
+            border: 1px solid #000;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" draggable="true"></div>
+    <div class="container"></div>
+
+    <script>
+        /*
+        1. H5新增拖拽属性 ： draggable = "true"
+
+        2. H5元素拖拽事件 (前提是要设置draggable = "true")
+            a.开始拖拽 : ondragstart
+            b.正在拖拽 : ondrag
+            c.结束拖拽 ：ondragend
+            场景 ： 用来做拖拽的
+
+        3. H5容器盒子事件
+            a. ondragenter  :  元素  拖拽到    容器范围内触发
+            b. ondragleave  :  元素  拖拽离开   容器范围内触发
+            c. ondragover  :   元素  在 容器范围内 拖拽（移动）
+            d. ondrop      :   元素  结束拖拽(鼠标松开)  还在我的范围内 
+                * 默认不会触发，触发前提条件 (1)需要注册ondragover (2)阻止默认行为e.preventDefault()
+        
+        4. H5容器盒子事件应用场景 ： 拖拽到容器
+        */
+
+        //1.获取元素
+        var box = document.querySelector('.box');//元素
+        var container = document.querySelector('.container');//容器盒子
+
+        //2.注册事件 ： 给容器盒子注册
+
+        //2.1 ondragenter  :  元素  拖拽到    容器范围内触发
+        container.ondragenter = function(){
+            console.log('有元素 拖拽到  我的范围（地盘  ikun来了）');
+            
+        };
+
+        //2.2 ondragleave  :  元素  拖拽离开   容器范围内触发
+        container.ondragleave = function(){
+            console.log('有元素 拖拽离开  我的范围（地盘 ikun走了leave）');
+            
+        };
+
+        //2.3 ondragover  :   元素  在 容器范围内 拖拽
+        //注意点 ： 这是一个高频事件（触发极其频繁），一般需要阻止默认行为，提高性能
+        container.ondragover = function(e){
+            //阻止浏览器默认行为
+            e.preventDefault();
+            console.log('有元素 在我的范围 拖拽移动 （ikun在我的场子很浪）');  
+        };
+
+        //2.4 ondrop : 元素 拖拽结束后， 停留在我的范围内
+        /* 
+        注意点 ： 这个方法默认不会触发的
+        触发条件 ： 必须要注册ondragover ， 并且一定要阻止它的默认行为
+        */
+        container.ondrop = function(){
+            console.log('元素 拖拽结束后， 停留在我的范围内ondrop');
+        };
+    </script>
+</body>
+
+</html>

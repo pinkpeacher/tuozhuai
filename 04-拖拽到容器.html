@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background-color: #f00;
+        }
+
+        .container {
+            width: 400px;
+            height: 550px;
+            border: 1px solid #000;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" draggable="true"></div>
+    <div class="container"></div>
+
+    <script>
+        /*
+        1. H5新增拖拽属性 ： draggable = "true"
+
+        2. H5元素拖拽事件 (前提是要设置draggable = "true")
+            a.开始拖拽 : ondragstart
+            b.正在拖拽 : ondrag
+            c.结束拖拽 ：ondragend
+            场景 ： 用来做拖拽的
+
+        3. H5容器盒子事件
+            a. ondragenter  :  元素  拖拽到    容器范围内触发
+            b. ondragleave  :  元素  拖拽离开   容器范围内触发
+            c. ondragover  :   元素  在 容器范围内 拖拽（移动）
+            d. ondrop      :   元素  结束拖拽(鼠标松开)  还在我的范围内 
+                * 默认不会触发，触发前提条件 (1)需要注册ondragover (2)阻止默认行为e.preventDefault()
+        
+        4. H5容器盒子事件应用场景 ： 拖拽到容器
+        */
+
+        //1.获取元素
+        var box = document.querySelector('.box');//元素
+        var container = document.querySelector('.container');//容器盒子
+
+        //2.注册事件 ： 给容器盒子注册
+
+        /* 注意点 ： 要想ondrop事件生效，必须要注册ondragover事件并且阻止默认行为 */
+        container.ondragover = function(e){
+            e.preventDefault();
+        };
+
+        container.ondrop = function(){
+            //如果元素结束拖拽时候，在我的范围内。 就添加为容器的子元素
+            //添加子元素 ： 如果是页面已存在，则是移动操作
+            container.appendChild(box);
+        };
+
+
+// 今天所有拖拽案例：
+//     1.允许拖拽  draggable="true"
+//     2.在容器当中： 设计到默认行为（自带的），需要取消
+//     e.preventDefault();
+//     默认行为：比如在css中 input 默认的边框样式--》 解决办法outline border:0 
+//     ios  -- 默认高亮 我们学习移动web时候，去掉了 
+    </script>
+</body>
+
+</html>
